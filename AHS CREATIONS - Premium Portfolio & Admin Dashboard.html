@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHS CREATIONS — Visual & Graphic Design Portfolio | Abrarul Haque Siam</title>
+    <meta name="description" content="Portfolio of Abrarul Haque Siam - Visual Designer, Graphic Designer & Creative Editor with 4+ years of experience crafting high-impact visual storytelling.">
+    <meta name="keywords" content="Graphic Design, Visual Art, Brand Identity, Visual Manipulation, Poster Design, Abrarul Haque Siam, AHS CREATIONS">
+    <meta name="author" content="Abrarul Haque Siam">
+    
+    <!-- Open Graph / Social Meta -->
+    <meta property="og:title" content="AHS CREATIONS — Visual & Graphic Design Portfolio">
+    <meta property="og:description" content="High-impact visual storytelling, creative manipulation, and luxury graphic design by Abrarul Haque Siam.">
+    <meta property="og:type" content="website">
+    
+    <!-- Google Fonts: Syne & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#0a0a0c',
+                            card: '#121216',
+                            border: '#22222a',
+                            accent: '#e63946', // Default accent: Crimson
+                            accentHover: '#ff4d5e',
+                            muted: '#8e8e9e',
+                            light: '#f4f4f7'
+                        }
+                    },
+                    fontFamily: {
+                        syne: ['Syne', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- FontAwesome Icons & Lucide Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Alpine.js & Supabase JS Bundle -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <style>
+        /* Custom Custom Scrollbar & Editorial Aesthetic Rules */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0c;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #22222a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-color, #e63946);
+        }
+        
+        .editorial-title {
+            letter-spacing: -0.04em;
+            line-height: 0.95;
+        }
+        
+        .glass-nav {
+            background: rgba(10, 10, 12, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        
+        .img-zoom-hover {
+            transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .img-zoom-hover:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Custom Accent Variable Mapping */
+        :root {
+            --accent-color: #e63946;
+        }
+        .bg-accent { background-color: var(--accent-color); }
+        .text-accent { color: var(--accent-color); }
+        .border-accent { border-color: var(--accent-color); }
+        .focus-accent:focus { border-color: var(--accent-color); ring-color: var(--accent-color); }
+    </style>
+</head>
+<body class="bg-brand-bg text-brand-light font-sans antialiased selection:bg-brand-accent selection:text-white" 
+      x-data="ahsApp()" 
+      x-init="initApp()" 
+      :style="'--accent-color: ' + settings.accentColor">
+
+    <!-- TOP ANNOUNCEMENT / DEMO NOTICE BANNER -->
+    <template x-if="isDemoMode">
+        <div class="bg-gradient-to-r from-neutral-900 via-neutral-800 to-neutral-900 text-neutral-300 text-xs py-2 px-4 border-b border-brand-border text-center flex items-center justify-between z-50 relative">
+            <span class="mx-auto flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span><strong>Demo Mode Active:</strong> All changes persist in LocalStorage. Connect real Supabase anytime in <button @click="openAdmin()" class="underline font-semibold text-white hover:text-accent">Admin Dashboard</button>.</span>
+            </span>
+            <button @click="isDemoMode = false" class="text-neutral-400 hover:text-white"><i class="fas fa-times"></i></button>
+        </div>
+    </template>
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="sticky top-0 z-40 glass-nav border-b border-brand-border/60 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#home" class="group flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-neutral-900 border border-brand-border flex items-center justify-center font-syne font-bold text-lg text-accent transition-transform group-hover:scale-105">
+                    A
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-syne font-bold tracking-wider text-lg leading-none" x-text="settings.brandName">AHS CREATIONS</span>
+                    <span class="text-[10px] text-brand-muted tracking-widest uppercase mt-1" x-text="settings.tagline">Visual & Creative Studio</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-neutral-300">
+                <a href="#about" class="hover:text-accent transition-colors">About</a>
+                <a href="#works" class="hover:text-accent transition-colors">Works</a>
+                <a href="#services" class="hover:text-accent transition-colors">Services</a>
+                <a href="#experience" class="hover:text-accent transition-colors">Timeline</a>
+                <a href="#contact" class="hover:text-accent transition-colors">Contact</a>
+            </nav>
+
+            <!-- Action Buttons -->
+            <div class="hidden md:flex items-center gap-4">
+                <a href="#contact" class="px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-brand-border hover:bg-neutral-800 border border-neutral-700 transition-all">
+                    Let's Talk
+                </a>
+                <button @click="openAdmin()" class="p-2.5 rounded-full bg-neutral-900 hover:bg-neutral-800 border border-brand-border text-neutral-400 hover:text-white transition-all relative" title="Admin Dashboard Portal">
+                    <i class="fas fa-lock text-sm"></i>
+                    <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-accent rounded-full"></span>
+                </button>
+            </div>
+
+            <!-- Mobile Hamburger Toggle -->
+            <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-2xl text-neutral-300 focus:outline-none">
+                <i class="fas" :class="mobileMenuOpen ? 'fa-times' : 'fa-bars'"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation Drawer -->
+        <div x-show="mobileMenuOpen" x-transition.origin.top class="md:hidden border-b border-brand-border bg-brand-bg px-6 py-6 space-y-4">
+            <a href="#about" @click="mobileMenuOpen = false" class="block text-base font-medium text-neutral-300 hover:text-accent">About</a>
+            <a href="#works" @click="mobileMenuOpen = false" class="block text-base font-medium text-neutral-300 hover:text-accent">Works</a>
+            <a href="#services" @click="mobileMenuOpen = false" class="block text-base font-medium text-neutral-300 hover:text-accent">Services</a>
+            <a href="#experience" @click="mobileMenuOpen = false" class="block text-base font-medium text-neutral-300 hover:text-accent">Timeline</a>
+            <a href="#contact" @click="mobileMenuOpen = false" class="block text-base font-medium text-neutral-300 hover:text-accent">Contact</a>
+            <div class="pt-4 border-t border-brand-border flex items-center justify-between">
+                <a href="#contact" @click="mobileMenuOpen = false" class="px-6 py-2.5 rounded-full text-xs font-semibold bg-accent text-white uppercase">Let's Talk</a>
+                <button @click="openAdmin(); mobileMenuOpen = false" class="px-4 py-2 rounded-lg bg-neutral-900 border border-brand-border text-xs text-neutral-300">
+                    <i class="fas fa-lock mr-2"></i>Admin Login
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT SECTIONS -->
+    <main id="home">
+        
+        <!-- HERO SECTION -->
+        <section class="min-h-[calc(100vh-5rem)] flex items-center justify-center relative overflow-hidden py-20 px-6 border-b border-brand-border/40">
+            <!-- Subtle Radial Gradient Glow -->
+            <div class="absolute -top-40 -left-40 w-96 h-96 bg-neutral-800/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-accent/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="max-w-5xl mx-auto text-center space-y-8 relative z-10">
+                <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-neutral-900/90 border border-brand-border text-xs tracking-widest text-neutral-400 uppercase">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span x-text="profile.availabilityStatus || 'Available for Freelance & Select Commissions'"></span>
+                </div>
+
+                <h1 class="font-syne text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold uppercase editorial-title tracking-tight">
+                    <span class="block text-neutral-400" x-text="heroText.topLine">VISUAL ART &</span>
+                    <span class="block text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-200 to-neutral-400" x-text="heroText.mainLine">GRAPHIC DESIGN</span>
+                </h1>
+
+                <p class="max-w-2xl mx-auto text-lg md:text-xl text-brand-muted font-light leading-relaxed" x-text="profile.shortBio">
+                    Crafting immersive visual identity, editorial poster artwork, and strategic visual media with 4+ years of creative expertise.
+                </p>
+
+                <div class="pt-4 flex flex-wrap items-center justify-center gap-4">
+                    <a href="#works" class="px-8 py-4 rounded-full bg-accent hover:bg-neutral-100 text-white hover:text-black font-semibold text-sm tracking-wider uppercase transition-all shadow-lg hover:shadow-accent/20">
+                        Explore Works <i class="fas fa-arrow-down ml-2"></i>
+                    </a>
+                    <a href="#contact" class="px-8 py-4 rounded-full bg-neutral-900 border border-brand-border hover:border-neutral-500 text-neutral-200 font-semibold text-sm tracking-wider uppercase transition-all">
+                        Get In Touch
+                    </a>
+                </div>
+
+                <!-- Hero Quick Stats Banner -->
+                <div class="pt-16 grid grid-cols-2 md:grid-cols-4 gap-6 border-t border-brand-border/40 max-w-4xl mx-auto">
+                    <div>
+                        <div class="font-syne text-3xl md:text-4xl font-bold text-white" x-text="profile.yearsExperience + '+'">4+</div>
+                        <div class="text-xs text-brand-muted uppercase tracking-wider mt-1">Years Experience</div>
+                    </div>
+                    <div>
+                        <div class="font-syne text-3xl md:text-4xl font-bold text-white" x-text="projects.length">12+</div>
+                        <div class="text-xs text-brand-muted uppercase tracking-wider mt-1">Projects Delivered</div>
+                    </div>
+                    <div>
+                        <div class="font-syne text-3xl md:text-4xl font-bold text-white">100%</div>
+                        <div class="text-xs text-brand-muted uppercase tracking-wider mt-1">Creative Dedication</div>
+                    </div>
+                    <div>
+                        <div class="font-syne text-3xl md:text-4xl font-bold text-white">4K</div>
+                        <div class="text-xs text-brand-muted uppercase tracking-wider mt-1">Visual Fidelity</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT ME SECTION -->
+        <section id="about" class="py-24 px-6 border-b border-brand-border/40 relative">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left: Profile Image Frame -->
+                <div class="lg:col-span-5 relative">
+                    <div class="relative rounded-2xl overflow-hidden border border-brand-border bg-neutral-900 aspect-[4/5] group">
+                        <img :src="profile.photoUrl" 
+                             :alt="profile.fullName" 
+                             class="w-full h-full object-cover img-zoom-hover"
+                             onerror="this.src='https://placehold.co/600x750/121216/ffffff?text=Abrarul+Haque+Siam'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80"></div>
+                        <div class="absolute bottom-6 left-6 right-6">
+                            <span class="text-xs uppercase tracking-widest text-accent font-semibold">Creative Director & Designer</span>
+                            <h3 class="font-syne text-2xl font-bold text-white mt-1" x-text="profile.fullName">Abrarul Haque Siam</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Bio & Narrative -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-accent">
+                        <span class="w-2 h-0.5 bg-accent"></span> About The Creative
+                    </div>
+                    
+                    <h2 class="font-syne text-3xl md:text-5xl font-bold leading-tight">
+                        Transforming bold ideas into iconic visual experiences.
+                    </h2>
+
+                    <div class="prose prose-invert text-neutral-300 font-light space-y-4 text-base leading-relaxed" x-html="profile.fullBio">
+                        <!-- Rendered from profile.fullBio -->
+                    </div>
+
+                    <!-- Core Competency Tags -->
+                    <div class="pt-4 space-y-3">
+                        <h4 class="text-xs font-semibold tracking-widest uppercase text-brand-muted">Core Focus Areas</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <template x-for="skill in profile.skillsList" :key="skill">
+                                <span class="px-3.5 py-1.5 rounded-md bg-neutral-900 border border-brand-border text-xs text-neutral-300 font-medium" x-text="skill"></span>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- PORTFOLIO / MY WORKS SECTION -->
+        <section id="works" class="py-24 px-6 border-b border-brand-border/40 bg-black/40">
+            <div class="max-w-7xl mx-auto space-y-12">
+                
+                <!-- Section Header -->
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-brand-border/60 pb-8">
+                    <div>
+                        <div class="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-accent">
+                            <span class="w-2 h-0.5 bg-accent"></span> Selected Portfolio
+                        </div>
+                        <h2 class="font-syne text-4xl md:text-5xl font-extrabold uppercase mt-2">
+                            Featured Works
+                        </h2>
+                    </div>
+
+                    <!-- Category Filters -->
+                    <div class="flex flex-wrap gap-2">
+                        <button @click="activeFilter = 'All'" 
+                                :class="activeFilter === 'All' ? 'bg-accent text-white border-accent' : 'bg-neutral-900 text-neutral-400 border-brand-border hover:border-neutral-600'"
+                                class="px-4 py-2 rounded-full text-xs font-medium border transition-all">
+                            All Projects (<span x-text="projects.length"></span>)
+                        </button>
+                        <template x-for="cat in categories" :key="cat">
+                            <button @click="activeFilter = cat" 
+                                    :class="activeFilter === cat ? 'bg-accent text-white border-accent' : 'bg-neutral-900 text-neutral-400 border-brand-border hover:border-neutral-600'"
+                                    class="px-4 py-2 rounded-full text-xs font-medium border transition-all" 
+                                    x-text="cat">
+                            </button>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Projects Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <template x-for="project in filteredProjects" :key="project.id">
+                        <div class="group bg-brand-card rounded-xl overflow-hidden border border-brand-border hover:border-neutral-600 transition-all duration-300 flex flex-col">
+                            
+                            <!-- Card Image Viewport -->
+                            <div class="relative aspect-[4/3] overflow-hidden bg-neutral-900 cursor-pointer" @click="openLightbox(project)">
+                                <img :src="project.imageUrl" 
+                                     :alt="project.title" 
+                                     class="w-full h-full object-cover img-zoom-hover"
+                                     onerror="this.src='https://placehold.co/800x600/121216/ffffff?text=AHS+Project'">
+                                
+                                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                                    <span class="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center text-sm shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-transform">
+                                        <i class="fas fa-expand"></i>
+                                    </span>
+                                </div>
+
+                                <template x-if="project.isFeatured">
+                                    <span class="absolute top-3 left-3 px-2.5 py-1 rounded bg-accent text-white text-[10px] font-bold uppercase tracking-wider">
+                                        Featured
+                                    </span>
+                                </template>
+                            </div>
+
+                            <!-- Card Text Info -->
+                            <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                                <div>
+                                    <div class="flex items-center justify-between text-xs text-brand-muted mb-2">
+                                        <span class="uppercase tracking-wider font-semibold text-accent" x-text="project.category"></span>
+                                        <span x-text="project.date"></span>
+                                    </div>
+                                    <h3 class="font-syne text-xl font-bold text-white group-hover:text-accent transition-colors" x-text="project.title"></h3>
+                                    <p class="text-sm text-brand-muted line-clamp-2 mt-2 font-light" x-text="project.description"></p>
+                                </div>
+
+                                <div class="pt-4 border-t border-brand-border/60 flex items-center justify-between">
+                                    <div class="flex items-center gap-1.5 text-xs text-neutral-400">
+                                        <i class="fas fa-tools text-brand-muted"></i>
+                                        <span x-text="project.tools"></span>
+                                    </div>
+                                    <button @click="openLightbox(project)" class="text-xs font-semibold text-neutral-300 hover:text-white flex items-center gap-1">
+                                        Details <i class="fas fa-arrow-right text-[10px]"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Empty State -->
+                <template x-if="filteredProjects.length === 0">
+                    <div class="text-center py-16 bg-neutral-900/40 rounded-2xl border border-brand-border">
+                        <i class="fas fa-folder-open text-4xl text-neutral-600 mb-3"></i>
+                        <p class="text-neutral-400 font-medium">No projects found under this category.</p>
+                    </div>
+                </template>
+
+            </div>
+        </section>
+
+        <!-- SERVICES SECTION -->
+        <section id="services" class="py-24 px-6 border-b border-brand-border/40">
+            <div class="max-w-7xl mx-auto space-y-16">
+                <div class="text-center max-w-2xl mx-auto space-y-3">
+                    <div class="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-accent">
+                        <span class="w-2 h-0.5 bg-accent"></span> Professional Offerings
+                    </div>
+                    <h2 class="font-syne text-4xl md:text-5xl font-extrabold uppercase">
+                        Creative Services
+                    </h2>
+                    <p class="text-brand-muted font-light text-base">
+                        Comprehensive design solutions engineered to elevate brands, campaigns, and digital storytelling.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <template x-for="(service, idx) in services" :key="service.id || idx">
+                        <div class="p-8 rounded-2xl bg-brand-card border border-brand-border hover:border-neutral-500 transition-all duration-300 space-y-6 group">
+                            <div class="w-14 h-14 rounded-xl bg-neutral-900 border border-brand-border flex items-center justify-center text-accent text-2xl group-hover:bg-accent group-hover:text-white transition-all">
+                                <i :class="service.iconClass || 'fas fa-vector-square'"></i>
+                            </div>
+                            <div class="space-y-2">
+                                <h3 class="font-syne text-2xl font-bold text-white" x-text="service.title"></h3>
+                                <p class="text-sm text-brand-muted font-light leading-relaxed" x-text="service.description"></p>
+                            </div>
+                            <div class="pt-4 border-t border-brand-border/60 flex items-center justify-between text-xs text-neutral-400">
+                                <span>Turnaround: <strong class="text-neutral-200" x-text="service.turnaround || '2-4 Days'"></strong></span>
+                                <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXPERIENCE & SKILLS TIMELINE SECTION -->
+        <section id="experience" class="py-24 px-6 border-b border-brand-border/40 bg-black/40">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16">
+                
+                <!-- Timeline Left -->
+                <div class="lg:col-span-7 space-y-8">
+                    <div>
+                        <div class="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-accent">
+                            <span class="w-2 h-0.5 bg-accent"></span> Career Trajectory
+                        </div>
+                        <h2 class="font-syne text-4xl font-extrabold uppercase mt-2">
+                            Experience Timeline
+                        </h2>
+                    </div>
+
+                    <div class="relative border-l border-brand-border/80 pl-6 ml-3 space-y-10">
+                        <template x-for="item in timeline" :key="item.period">
+                            <div class="relative group">
+                                <!-- Dot Marker -->
+                                <div class="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full bg-brand-bg border-2 border-accent group-hover:scale-125 transition-transform"></div>
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-xs font-semibold tracking-wider text-accent uppercase" x-text="item.period"></span>
+                                        <span class="text-xs text-brand-muted" x-text="item.role"></span>
+                                    </div>
+                                    <h4 class="font-syne text-xl font-bold text-white" x-text="item.companyOrTitle"></h4>
+                                    <p class="text-sm text-brand-muted font-light leading-relaxed" x-text="item.details"></p>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Software Proficiency Right -->
+                <div class="lg:col-span-5 space-y-8">
+                    <div>
+                        <div class="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-accent">
+                            <span class="w-2 h-0.5 bg-accent"></span> Tooling & Mastery
+                        </div>
+                        <h2 class="font-syne text-4xl font-extrabold uppercase mt-2">
+                            Software Skills
+                        </h2>
+                    </div>
+
+                    <div class="space-y-6 bg-brand-card p-8 rounded-2xl border border-brand-border">
+                        <template x-for="tool in softwareSkills" :key="tool.name">
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-xs font-semibold">
+                                    <span class="text-neutral-200" x-text="tool.name"></span>
+                                    <span class="text-accent" x-text="tool.level + '%'"></span>
+                                </div>
+                                <div class="h-2 w-full rounded-full bg-neutral-900 overflow-hidden border border-brand-border">
+                                    <div class="h-full bg-accent transition-all duration-1000" :style="'width: ' + tool.level + '%'"></div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contact" class="py-24 px-6 border-b border-brand-border/40">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
+                
+                <!-- Left Details -->
+                <div class="lg:col-span-5 space-y-8">
+                    <div>
+                        <div class="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-accent">
+                            <span class="w-2 h-0.5 bg-accent"></span> Initiate Project
+                        </div>
+                        <h2 class="font-syne text-4xl md:text-5xl font-extrabold uppercase mt-2">
+                            Let's Build Something Bold.
+                        </h2>
+                    </div>
+
+                    <p class="text-brand-muted font-light text-base leading-relaxed" x-text="contactInfo.introText">
+                        Have a creative project, visual campaign, or visual design request? Reach out via form, email, or WhatsApp directly.
+                    </p>
+
+                    <div class="space-y-4 pt-4">
+                        <div class="flex items-center gap-4 p-4 rounded-xl bg-neutral-900/80 border border-brand-border">
+                            <div class="w-10 h-10 rounded-lg bg-neutral-800 flex items-center justify-center text-accent">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <div class="text-[10px] text-brand-muted uppercase tracking-wider">Email Address</div>
+                                <a :href="'mailto:' + contactInfo.email" class="text-sm font-semibold text-white hover:text-accent transition-colors" x-text="contactInfo.email"></a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 p-4 rounded-xl bg-neutral-900/80 border border-brand-border">
+                            <div class="w-10 h-10 rounded-lg bg-neutral-800 flex items-center justify-center text-emerald-500">
+                                <i class="fab fa-whatsapp text-lg"></i>
+                            </div>
+                            <div>
+                                <div class="text-[10px] text-brand-muted uppercase tracking-wider">WhatsApp Direct</div>
+                                <a :href="'https://wa.me/' + contactInfo.whatsapp.replace(/[^0-9]/g, '')" target="_blank" class="text-sm font-semibold text-white hover:text-emerald-400 transition-colors" x-text="contactInfo.whatsapp"></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Icons Bar -->
+                    <div class="space-y-3 pt-4">
+                        <h4 class="text-xs font-semibold tracking-widest uppercase text-brand-muted">Social Profiles</h4>
+                        <div class="flex items-center gap-3">
+                            <template x-for="social in socialLinks" :key="social.platform">
+                                <a :href="social.url" target="_blank" class="w-10 h-10 rounded-lg bg-neutral-900 border border-brand-border hover:border-neutral-500 flex items-center justify-center text-neutral-300 hover:text-accent transition-all">
+                                    <i :class="social.icon"></i>
+                                </a>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Form -->
+                <div class="lg:col-span-7 bg-brand-card p-8 sm:p-10 rounded-2xl border border-brand-border">
+                    <form @submit.prevent="submitContactForm()" class="space-y-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-xs font-medium uppercase tracking-wider text-neutral-300">Your Name *</label>
+                                <input type="text" x-model="form.name" required class="w-full px-4 py-3 rounded-lg bg-neutral-900 border border-brand-border text-white text-sm focus:outline-none focus-accent" placeholder="John Doe">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-medium uppercase tracking-wider text-neutral-300">Email Address *</label>
+                                <input type="email" x-model="form.email" required class="w-full px-4 py-3 rounded-lg bg-neutral-900 border border-brand-border text-white text-sm focus:outline-none focus-accent" placeholder="john@example.com">
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="text-xs font-medium uppercase tracking-wider text-neutral-300">Service Required</label>
+                            <select x-model="form.service" class="w-full px-4 py-3 rounded-lg bg-neutral-900 border border-brand-border text-white text-sm focus:outline-none focus-accent">
+                                <option value="Graphic Design">Graphic Design & Posters</option>
+                                <option value="Visual Manipulation">Visual Manipulation / Editing</option>
+                                <option value="Social Media Branding">Social Media Branding</option>
+                                <option value="Video Editing">Video Editing & Motion</option>
+                                <option value="Other">Other Custom Inquiry</option>
+                            </select>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="text-xs font-medium uppercase tracking-wider text-neutral-300">Project Details *</label>
+                            <textarea x-model="form.message" rows="5" required class="w-full px-4 py-3 rounded-lg bg-neutral-900 border border-brand-border text-white text-sm focus:outline-none focus-accent" placeholder="Briefly describe your creative goals..."></textarea>
+                        </div>
+
+                        <button type="submit" :disabled="formSubmitting" class="w-full py-4 rounded-xl bg-accent hover:bg-neutral-100 text-white hover:text-black font-semibold text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2">
+                            <span x-show="!formSubmitting">Send Inquiry <i class="fas fa-paper-plane ml-1"></i></span>
+                            <span x-show="formSubmitting"><i class="fas fa-spinner fa-spin"></i> Dispatching...</span>
+                        </button>
+
+                        <div x-show="formSent" x-transition class="p-4 rounded-lg bg-emerald-950/60 border border-emerald-800 text-emerald-300 text-xs text-center font-medium">
+                            <i class="fas fa-check-circle mr-2"></i> Message dispatched successfully! Abrarul will get back to you shortly.
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="py-12 px-6 bg-brand-bg text-brand-muted border-t border-brand-border text-xs">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <span class="font-syne font-bold text-white tracking-wider" x-text="settings.brandName">AHS CREATIONS</span>
+                <span>— Designed by Abrarul Haque Siam</span>
+            </div>
+            
+            <div>
+                © <span x-text="new Date().getFullYear()"></span> AHS CREATIONS. All rights reserved.
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button @click="openAdmin()" class="hover:text-white transition-colors">Admin Portal</button>
+                <span>•</span>
+                <a href="#home" class="hover:text-white transition-colors">Back to Top <i class="fas fa-arrow-up ml-1"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- LIGHTBOX MODAL -->
+    <div x-show="lightboxOpen" x-transition.opacity class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 md:p-10" @keydown.window.escape="lightboxOpen = false">
+        <div class="relative max-w-5xl w-full bg-brand-card rounded-2xl border border-brand-border overflow-hidden max-h-[90vh] flex flex-col lg:flex-row" @click.away="lightboxOpen = false">
+            <!-- Close Button -->
+            <button @click="lightboxOpen = false" class="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-accent transition-colors">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <!-- Image Container -->
+            <div class="lg:w-7/12 bg-black flex items-center justify-center p-4 min-h-[300px]">
+                <img :src="selectedProject?.imageUrl" :alt="selectedProject?.title" class="max-h-[70vh] w-auto object-contain rounded">
+            </div>
+
+            <!-- Meta Details Container -->
+            <div class="lg:w-5/12 p-6 md:p-8 overflow-y-auto space-y-6 flex flex-col justify-between">
+                <div class="space-y-4">
+                    <div class="flex items-center gap-2">
+                        <span class="px-2.5 py-1 rounded bg-neutral-900 border border-brand-border text-[11px] font-bold uppercase text-accent" x-text="selectedProject?.category"></span>
+                        <span class="text-xs text-brand-muted" x-text="selectedProject?.date"></span>
+                    </div>
+
+                    <h3 class="font-syne text-2xl font-bold text-white" x-text="selectedProject?.title"></h3>
+                    <p class="text-sm text-neutral-300 font-light leading-relaxed" x-text="selectedProject?.description"></p>
+                </div>
+
+                <div class="space-y-4 pt-6 border-t border-brand-border">
+                    <div>
+                        <div class="text-xs uppercase tracking-wider text-brand-muted font-semibold mb-1">Tools & Software</div>
+                        <div class="text-sm text-white font-medium" x-text="selectedProject?.tools"></div>
+                    </div>
+
+                    <a :href="selectedProject?.externalUrl || '#contact'" target="_blank" class="w-full py-3 rounded-lg bg-accent text-white font-semibold text-xs uppercase tracking-wider text-center block hover:opacity-90 transition-opacity">
+                        Inquire About Similar Work
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRIVATE ADMIN DASHBOARD MODAL PORTAL -->
+    <div x-show="adminModalOpen" x-transition.opacity class="fixed inset-0 z-50 bg-black/95 backdrop-blur-lg flex items-center justify-center p-4 md:p-8" @keydown.window.escape="adminModalOpen = false">
+        
+        <div class="relative max-w-6xl w-full bg-brand-bg rounded-2xl border border-brand-border shadow-2xl overflow-hidden max-h-[92vh] flex flex-col">
+            
+            <!-- Dashboard Header Bar -->
+            <div class="px-6 py-4 border-b border-brand-border bg-neutral-900/90 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded bg-accent text-white font-syne font-bold flex items-center justify-center">A</div>
+                    <div>
+                        <h3 class="font-syne font-bold text-sm text-white">AHS CREATIONS — Admin Portal</h3>
+                        <span class="text-[10px] text-brand-muted" x-text="isAuthenticated ? 'Logged In as Administrator' : 'Authentication Required'"></span>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <template x-if="isAuthenticated">
+                        <button @click="logoutAdmin()" class="px-3 py-1.5 rounded bg-neutral-800 text-xs text-neutral-300 hover:text-white hover:bg-neutral-700">
+                            <i class="fas fa-sign-out-alt mr-1"></i> Logout
+                        </button>
+                    </template>
+                    <button @click="adminModalOpen = false" class="text-neutral-400 hover:text-white p-2">
+                        <i class="fas fa-times text-lg"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- LOGIN VIEW (If not authenticated) -->
+            <template x-if="!isAuthenticated">
+                <div class="p-8 sm:p-16 max-w-md mx-auto w-full space-y-6 text-center my-auto">
+                    <div class="w-16 h-16 rounded-2xl bg-neutral-900 border border-brand-border text-accent text-2xl flex items-center justify-center mx-auto">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div>
+                        <h2 class="font-syne text-2xl font-bold text-white">Admin Authentication</h2>
+                        <p class="text-xs text-brand-muted mt-1">Enter passcode or use quick demo bypass to access studio content control.</p>
+                    </div>
+
+                    <form @submit.prevent="loginAdmin()" class="space-y-4 text-left">
+                        <div class="space-y-1">
+                            <label class="text-[11px] font-semibold text-neutral-400 uppercase">Access Passcode</label>
+                            <input type="password" x-model="adminPasscode" class="w-full px-4 py-3 rounded-lg bg-neutral-900 border border-brand-border text-white text-sm focus:outline-none focus-accent" placeholder="Enter admin password (demo: admin123)">
+                        </div>
+                        
+                        <div x-show="authError" class="text-xs text-rose-400 font-medium" x-text="authError"></div>
+
+                        <button type="submit" class="w-full py-3 rounded-lg bg-accent text-white font-semibold text-xs uppercase tracking-wider">
+                            Unlock Dashboard
+                        </button>
+
+                        <button type="button" @click="adminPasscode='admin123'; loginAdmin()" class="w-full py-2.5 rounded-lg bg-neutral-900 border border-brand-border text-neutral-400 hover:text-white text-xs">
+                            <i class="fas fa-key mr-1"></i> Quick 1-Click Demo Login
+                        </button>
+                    </form>
+                </div>
+            </template>
+
+            <!-- AUTHENTICATED DASHBOARD BODY -->
+            <template x-if="isAuthenticated">
+                <div class="flex-1 flex flex-col md:flex-row overflow-hidden">
+                    
+                    <!-- Admin Sidebar Navigation -->
+                    <div class="w-full md:w-64 border-r border-brand-border bg-neutral-900/40 p-4 space-y-1 flex-shrink-0">
+                        <button @click="adminTab = 'overview'" :class="adminTab === 'overview' ? 'bg-accent text-white' : 'text-neutral-400 hover:bg-neutral-900 hover:text-white'" class="w-full px-4 py-3 rounded-lg text-xs font-semibold text-left flex items-center gap-3 transition-colors">
+                            <i class="fas fa-chart-pie w-4"></i> Overview Stats
+                        </button>
+                        <button @click="adminTab = 'projects'" :class="adminTab === 'projects' ? 'bg-accent text-white' : 'text-neutral-400 hover:bg-neutral-900 hover:text-white'" class="w-full px-4 py-3 rounded-lg text-xs font-semibold text-left flex items-center gap-3 transition-colors">
+                            <i class="fas fa-folder w-4"></i> Portfolio Projects (<span x-text="projects.length"></span>)
+                        </button>
+                        <button @click="adminTab = 'content'" :class="adminTab === 'content' ? 'bg-accent text-white' : 'text-neutral-400 hover:bg-neutral-900 hover:text-white'" class="w-full px-4 py-3 rounded-lg text-xs font-semibold text-left flex items-center gap-3 transition-colors">
+                            <i class="fas fa-edit w-4"></i> Bio & Content Editor
+                        </button>
+                        <button @click="adminTab = 'services'" :class="adminTab === 'services' ? 'bg-accent text-white' : 'text-neutral-400 hover:bg-neutral-900 hover:text-white'" class="w-full px-4 py-3 rounded-lg text-xs font-semibold text-left flex items-center gap-3 transition-colors">
+                            <i class="fas fa-concierge-bell w-4"></i> Services Manager
+                        </button>
+                        <button @click="adminTab = 'settings'" :class="adminTab === 'settings' ? 'bg-accent text-white' : 'text-neutral-400 hover:bg-neutral-900 hover:text-white'" class="w-full px-4 py-3 rounded-lg text-xs font-semibold text-left flex items-center gap-3 transition-colors">
+                            <i class="fas fa-sliders-h w-4"></i> Theme & Brand Settings
+                        </button>
+                        <button @click="adminTab = 'supabase'" :class="adminTab === 'supabase' ? 'bg-accent text-white' : 'text-neutral-400 hover:bg-neutral-900 hover:text-white'" class="w-full px-4 py-3 rounded-lg text-xs font-semibold text-left flex items-center gap-3 transition-colors">
+                            <i class="fas fa-database w-4 text-emerald-400"></i> Supabase / SQL Schema
+                        </button>
+                    </div>
+
+                    <!-- Dashboard Main Panel Area -->
+                    <div class="flex-1 overflow-y-auto p-6 md:p-8 space-y-8">
+
+                        <!-- TAB 1: OVERVIEW STATS -->
+                        <div x-show="adminTab === 'overview'" class="space-y-6">
+                            <h3 class="font-syne text-xl font-bold text-white">System Dashboard Overview</h3>
+                            
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                                <div class="p-6 rounded-xl bg-neutral-900 border border-brand-border space-y-2">
+                                    <div class="text-xs text-brand-muted uppercase">Total Portfolio Projects</div>
+                                    <div class="font-syne text-3xl font-bold text-white" x-text="projects.length"></div>
+                                </div>
+                                <div class="p-6 rounded-xl bg-neutral-900 border border-brand-border space-y-2">
+                                    <div class="text-xs text-brand-muted uppercase">Active Services</div>
+                                    <div class="font-syne text-3xl font-bold text-white" x-text="services.length"></div>
+                                </div>
+                                <div class="p-6 rounded-xl bg-neutral-900 border border-brand-border space-y-2">
+                                    <div class="text-xs text-brand-muted uppercase">Database Backend</div>
+                                    <div class="font-syne text-lg font-bold text-emerald-400 flex items-center gap-2">
+                                        <i class="fas fa-check-circle"></i> <span x-text="isDemoMode ? 'LocalStorage Demo Engine' : 'Supabase Live Connected'"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TAB 2: PORTFOLIO PROJECTS CRUD -->
+                        <div x-show="adminTab === 'projects'" class="space-y-6">
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-syne text-xl font-bold text-white">Manage Projects</h3>
+                                <button @click="openProjectForm()" class="px-4 py-2 rounded-lg bg-accent text-white text-xs font-semibold">
+                                    <i class="fas fa-plus mr-1"></i> Add Project
+                                </button>
+                            </div>
+
+                            <!-- Project Form Drawer / Editor -->
+                            <div x-show="editingProject" class="p-6 rounded-xl bg-neutral-900 border border-brand-border space-y-4">
+                                <h4 class="font-syne font-bold text-sm text-white" x-text="editingProject?.id ? 'Edit Project' : 'New Project'"></h4>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <input type="text" x-model="editingProject.title" placeholder="Project Title" class="px-3 py-2 rounded bg-black border border-brand-border text-xs text-white">
+                                    <select x-model="editingProject.category" class="px-3 py-2 rounded bg-black border border-brand-border text-xs text-white">
+                                        <template x-for="cat in categories" :key="cat">
+                                            <option :value="cat" x-text="cat"></option>
+                                        </template>
+                                    </select>
+                                    <input type="text" x-model="editingProject.imageUrl" placeholder="Image URL (or use image generator)" class="px-3 py-2 rounded bg-black border border-brand-border text-xs text-white col-span-2">
+                                    <input type="text" x-model="editingProject.tools" placeholder="Tools (Photoshop, Illustrator, etc.)" class="px-3 py-2 rounded bg-black border border-brand-border text-xs text-white">
+                                    <input type="text" x-model="editingProject.date" placeholder="Project Date (e.g., Nov 2026)" class="px-3 py-2 rounded bg-black border border-brand-border text-xs text-white">
+                                    <textarea x-model="editingProject.description" rows="3" placeholder="Description" class="px-3 py-2 rounded bg-black border border-brand-border text-xs text-white col-span-2"></textarea>
+                                </div>
+                                <div class="flex items-center justify-end gap-3 pt-2">
+                                    <button @click="editingProject = null" class="px-4 py-2 rounded bg-neutral-800 text-xs text-neutral-300">Cancel</button>
+                                    <button @click="saveProject()" class="px-4 py-2 rounded bg-accent text-white text-xs font-semibold">Save Project</button>
+                                </div>
+                            </div>
+
+                            <!-- List of Projects -->
+                            <div class="space-y-3">
+                                <template x-for="p in projects" :key="p.id">
+                                    <div class="p-4 rounded-xl bg-neutral-900 border border-brand-border flex items-center justify-between gap-4">
+                                        <div class="flex items-center gap-4">
+                                            <img :src="p.imageUrl" class="w-12 h-12 rounded object-cover bg-black" onerror="this.src='https://placehold.co/100x100/121216/fff?text=P'">
+                                            <div>
+                                                <div class="font-bold text-sm text-white" x-text="p.title"></div>
+                                                <div class="text-[11px] text-brand-muted" x-text="p.category + ' • ' + p.date"></div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <button @click="editingProject = {...p}" class="px-3 py-1.5 rounded bg-neutral-800 text-xs text-neutral-300 hover:text-white">Edit</button>
+                                            <button @click="deleteProject(p.id)" class="px-3 py-1.5 rounded bg-rose-950/80 text-rose-300 text-xs hover:bg-rose-900">Delete</button>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+
+                        <!-- TAB 3: CONTENT & BIO EDITOR -->
+                        <div x-show="adminTab === 'content'" class="space-y-6">
+                            <h3 class="font-syne text-xl font-bold text-white">Profile & Bio Editor</h3>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="text-xs font-semibold text-neutral-300">Full Name</label>
+                                    <input type="text" x-model="profile.fullName" class="w-full px-4 py-2.5 rounded bg-neutral-900 border border-brand-border text-xs text-white mt-1">
+                                </div>
+                                <div>
+                                    <label class="text-xs font-semibold text-neutral-300">Years Experience Count</label>
+                                    <input type="number" x-model="profile.yearsExperience" class="w-full px-4 py-2.5 rounded bg-neutral-900 border border-brand-border text-xs text-white mt-1">
+                                </div>
+                                <div>
+                                    <label class="text-xs font-semibold text-neutral-300">Profile Image URL</label>
+                                    <input type="text" x-model="profile.photoUrl" class="w-full px-4 py-2.5 rounded bg-neutral-900 border border-brand-border text-xs text-white mt-1">
+                                </div>
+                                <div>
+                                    <label class="text-xs font-semibold text-neutral-300">Hero Short Intro</label>
+                                    <textarea x-model="profile.shortBio" rows="2" class="w-full px-4 py-2.5 rounded bg-neutral-900 border border-brand-border text-xs text-white mt-1"></textarea>
+                                </div>
+                                <div>
+                                    <label class="text-xs font-semibold text-neutral-300">Full Biography (HTML / Paragraphs)</label>
+                                    <textarea x-model="profile.fullBio" rows="6" class="w-full px-4 py-2.5 rounded bg-neutral-900 border border-brand-border text-xs text-white mt-1 font-mono text-xs"></textarea>
+                                </div>
+                                <button @click="saveState()" class="px-6 py-2.5 rounded bg-accent text-white text-xs font-semibold uppercase">Save Profile Content</button>
+                            </div>
+                        </div>
+
+                        <!-- TAB 4: SERVICES MANAGER -->
+                        <div x-show="adminTab === 'services'" class="space-y-6">
+                            <h3 class="font-syne text-xl font-bold text-white">Manage Services</h3>
+                            
+                            <div class="space-y-4">
+                                <template x-for="(s, idx) in services" :key="idx">
+                                    <div class="p-4 rounded-xl bg-neutral-900 border border-brand-border space-y-3">
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                            <input type="text" x-model="s.title" class="px-3 py-2 rounded bg-black text-xs text-white border border-brand-border" placeholder="Title">
+                                            <input type="text" x-model="s.turnaround" class="px-3 py-2 rounded bg-black text-xs text-white border border-brand-border" placeholder="Turnaround">
+                                        </div>
+                                        <textarea x-model="s.description" class="w-full px-3 py-2 rounded bg-black text-xs text-white border border-brand-border" rows="2" placeholder="Description"></textarea>
+                                    </div>
+                                </template>
+                                <button @click="saveState()" class="px-6 py-2.5 rounded bg-accent text-white text-xs font-semibold uppercase">Save Services</button>
+                            </div>
+                        </div>
+
+                        <!-- TAB 5: THEME & BRAND SETTINGS -->
+                        <div x-show="adminTab === 'settings'" class="space-y-6">
+                            <h3 class="font-syne text-xl font-bold text-white">Theme & Brand Palette</h3>
+                            
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="text-xs font-semibold text-neutral-300 block mb-2">Accent Color Theme</label>
+                                    <div class="flex items-center gap-4">
+                                        <button @click="settings.accentColor = '#e63946'" class="w-10 h-10 rounded-full bg-[#e63946] border-2" :class="settings.accentColor==='#e63946'?'border-white':'border-transparent'"></button>
+                                        <button @click="settings.accentColor = '#d4af37'" class="w-10 h-10 rounded-full bg-[#d4af37] border-2" :class="settings.accentColor==='#d4af37'?'border-white':'border-transparent'"></button>
+                                        <button @click="settings.accentColor = '#00b4d8'" class="w-10 h-10 rounded-full bg-[#00b4d8] border-2" :class="settings.accentColor==='#00b4d8'?'border-white':'border-transparent'"></button>
+                                        <button @click="settings.accentColor = '#ffffff'" class="w-10 h-10 rounded-full bg-[#ffffff] border-2" :class="settings.accentColor==='#ffffff'?'border-neutral-500':'border-transparent'"></button>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="text-xs font-semibold text-neutral-300">Studio Brand Name</label>
+                                    <input type="text" x-model="settings.brandName" class="w-full px-4 py-2.5 rounded bg-neutral-900 border border-brand-border text-xs text-white mt-1">
+                                </div>
+
+                                <button @click="saveState()" class="px-6 py-2.5 rounded bg-accent text-white text-xs font-semibold uppercase">Apply Theme Settings</button>
+                            </div>
+                        </div>
+
+                        <!-- TAB 6: SUPABASE ARCHITECTURE & SQL GENERATOR -->
+                        <div x-show="adminTab === 'supabase'" class="space-y-6">
+                            <h3 class="font-syne text-xl font-bold text-white">Supabase Integration & Migration Schema</h3>
+                            <p class="text-xs text-brand-muted">Easily upgrade from LocalStorage to real-time PostgreSQL database with Supabase.</p>
+
+                            <!-- SQL Schema Snippet Codeblock -->
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between text-xs text-neutral-300 font-mono">
+                                    <span>PostgreSQL Schema & RLS Policies (Click to Copy)</span>
+                                    <button @click="copySql()" class="text-accent hover:underline"><i class="fas fa-copy mr-1"></i> Copy SQL</button>
+                                </div>
+                                <pre class="p-4 rounded-xl bg-black border border-brand-border text-emerald-400 text-[11px] font-mono overflow-x-auto leading-relaxed select-all" x-text="sqlSchemaSnippet"></pre>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </template>
+
+        </div>
+    </div>
+
+    <!-- ALPINE APP REASONING & CONTROLLER LOGIC -->
+    <script>
+        function ahsApp() {
+            return {
+                mobileMenuOpen: false,
+                adminModalOpen: false,
+                isAuthenticated: false,
+                adminPasscode: '',
+                authError: '',
+                adminTab: 'overview',
+                isDemoMode: true,
+                activeFilter: 'All',
+                lightboxOpen: false,
+                selectedProject: null,
+                formSubmitting: false,
+                formSent: false,
+
+                // Filter Categories
+                categories: ['Graphic Design', 'Visual Manipulation', 'Social Media', 'Video Editing'],
+
+                // Contact Form Model
+                form: {
+                    name: '',
+                    email: '',
+                    service: 'Graphic Design',
+                    message: ''
+                },
+
+                // Hero Headline Config
+                heroText: {
+                    topLine: 'VISUAL ART &',
+                    mainLine: 'GRAPHIC DESIGN'
+                },
+
+                // Brand & Studio Settings
+                settings: {
+                    brandName: 'AHS CREATIONS',
+                    tagline: 'Visual & Creative Studio',
+                    accentColor: '#e63946'
+                },
+
+                // Profile & Bio Content
+                profile: {
+                    fullName: 'Abrarul Haque Siam',
+                    yearsExperience: 4,
+                    availabilityStatus: 'Available for Freelance & Select Commissions',
+                    photoUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop',
+                    shortBio: 'Crafting immersive visual identity, editorial poster artwork, and strategic visual media with 4+ years of dedicated creative experience.',
+                    fullBio: `<p>I am Abrarul Haque Siam, a passionate Visual Designer and Creative Editor. Over the past 4 years, I have honed my skills in digital composition, visual manipulation, and strategic branding.</p><p>My focus is on creating artwork that tells a story, evokes emotion, and establishes a commanding visual presence for brands and creators alike.</p>`,
+                    skillsList: ['Poster Design', 'Visual Manipulation', 'Brand Identity', 'Social Media Visuals', 'Color Grading', 'Creative Direction']
+                },
+
+                // Initial Portfolio Projects Seed Data
+                projects: [
+                    {
+                        id: 'proj-1',
+                        title: 'Cyberpunk Editorial Poster',
+                        category: 'Graphic Design',
+                        date: 'Oct 2026',
+                        tools: 'Photoshop, Illustrator',
+                        description: 'High-contrast futuristic typography artwork designed for digital print release.',
+                        imageUrl: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=800&auto=format&fit=crop',
+                        isFeatured: true
+                    },
+                    {
+                        id: 'proj-2',
+                        title: 'Surrealism Visual Composition',
+                        category: 'Visual Manipulation',
+                        date: 'Aug 2026',
+                        tools: 'Adobe Photoshop',
+                        description: 'Complex photo-manipulation blending natural landscapes with surreal cosmic elements.',
+                        imageUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop',
+                        isFeatured: true
+                    },
+                    {
+                        id: 'proj-3',
+                        title: 'Luxury Brand Identity Kit',
+                        category: 'Social Media',
+                        date: 'Jun 2026',
+                        tools: 'Figma, Illustrator',
+                        description: 'Complete visual identity system including social assets, typography guidelines, and color tokens.',
+                        imageUrl: 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=800&auto=format&fit=crop',
+                        isFeatured: false
+                    }
+                ],
+
+                // Services Seed Data
+                services: [
+                    {
+                        title: 'Graphic & Poster Design',
+                        description: 'Editorial posters, event visual artwork, and custom typographic layouts.',
+                        turnaround: '2-3 Days',
+                        iconClass: 'fas fa-palette'
+                    },
+                    {
+                        title: 'Visual Manipulation',
+                        description: 'Advanced photo compositing, surreal artwork creation, and high-end photo editing.',
+                        turnaround: '3-4 Days',
+                        iconClass: 'fas fa-wand-magic-sparkles'
+                    },
+                    {
+                        title: 'Social Media Visuals',
+                        description: 'High-converting social graphics, carousel designs, and aesthetic feed branding.',
+                        turnaround: '1-2 Days',
+                        iconClass: 'fas fa-hashtag'
+                    }
+                ],
+
+                // Career Timeline
+                timeline: [
+                    {
+                        period: '2023 — PRESENT',
+                        role: 'Lead Visual Designer',
+                        companyOrTitle: 'AHS CREATIONS Studio',
+                        details: 'Directing visual design, photo manipulation campaigns, and branding projects for international clients.'
+                    },
+                    {
+                        period: '2021 — 2023',
+                        role: 'Graphic Designer & Visual Editor',
+                        companyOrTitle: 'Freelance & Creative Agency',
+                        details: 'Specialized in poster production, graphic compositing, and social media media kits.'
+                    }
+                ],
+
+                // Software Proficiency Meters
+                softwareSkills: [
+                    { name: 'Adobe Photoshop', level: 95 },
+                    { name: 'Adobe Illustrator', level: 88 },
+                    { name: 'Adobe Premiere Pro', level: 82 },
+                    { name: 'Figma', level: 80 }
+                ],
+
+                // Contact Details
+                contactInfo: {
+                    email: 'abrarulhaquesiam@gmail.com',
+                    whatsapp: '+8801700000000',
+                    introText: 'Have a project in mind or want to discuss a creative visual collaboration? Send a message directly.'
+                },
+
+                // Social Links
+                socialLinks: [
+                    { platform: 'Behance', url: '#', icon: 'fab fa-behance' },
+                    { platform: 'Instagram', url: '#', icon: 'fab fa-instagram' },
+                    { platform: 'LinkedIn', url: '#', icon: 'fab fa-linkedin' },
+                    { platform: 'Dribbble', url: '#', icon: 'fab fa-dribbble' }
+                ],
+
+                // SQL Snippet for Supabase Migration Tab
+                sqlSchemaSnippet: `-- AHS CREATIONS PostgreSQL Supabase Migration Schema
+CREATE TABLE IF NOT EXISTS projects (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    title TEXT NOT NULL,
+    category TEXT NOT NULL,
+    date TEXT,
+    tools TEXT,
+    description TEXT,
+    image_url TEXT,
+    is_featured BOOLEAN DEFAULT false,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS profile_content (
+    id INT PRIMARY KEY DEFAULT 1,
+    full_name TEXT,
+    years_experience INT,
+    short_bio TEXT,
+    full_bio TEXT,
+    photo_url TEXT
+);
+
+-- Enable RLS & Security Policies
+ALTER TABLE projects ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Public Read Projects" ON projects FOR SELECT USING (true);
+CREATE POLICY "Admin All Access" ON projects FOR ALL USING (auth.role() = 'authenticated');`,
+
+                editingProject: null,
+
+                initApp() {
+                    // Load state from LocalStorage if available
+                    const saved = localStorage.getItem('ahs_creations_data');
+                    if (saved) {
+                        try {
+                            const parsed = JSON.parse(saved);
+                            if (parsed.projects) this.projects = parsed.projects;
+                            if (parsed.profile) this.profile = parsed.profile;
+                            if (parsed.services) this.services = parsed.services;
+                            if (parsed.settings) this.settings = parsed.settings;
+                        } catch (e) {
+                            console.error('Failed to parse saved state:', e);
+                        }
+                    }
+                },
+
+                saveState() {
+                    const data = {
+                        projects: this.projects,
+                        profile: this.profile,
+                        services: this.services,
+                        settings: this.settings
+                    };
+                    localStorage.setItem('ahs_creations_data', JSON.stringify(data));
+                    alert('Settings and content saved successfully!');
+                },
+
+                get filteredProjects() {
+                    if (this.activeFilter === 'All') return this.projects;
+                    return this.projects.filter(p => p.category === this.activeFilter);
+                },
+
+                openLightbox(project) {
+                    this.selectedProject = project;
+                    this.lightboxOpen = true;
+                },
+
+                openAdmin() {
+                    this.adminModalOpen = true;
+                },
+
+                loginAdmin() {
+                    if (this.adminPasscode === 'admin123') {
+                        this.isAuthenticated = true;
+                        this.authError = '';
+                    } else {
+                        this.authError = 'Invalid admin passcode. (Try "admin123")';
+                    }
+                },
+
+                logoutAdmin() {
+                    this.isAuthenticated = false;
+                    this.adminPasscode = '';
+                },
+
+                openProjectForm() {
+                    this.editingProject = {
+                        id: 'proj-' + Date.now(),
+                        title: '',
+                        category: 'Graphic Design',
+                        date: 'Nov 2026',
+                        tools: 'Photoshop',
+                        description: '',
+                        imageUrl: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=800&auto=format&fit=crop',
+                        isFeatured: false
+                    };
+                },
+
+                saveProject() {
+                    if (!this.editingProject.title) return;
+                    const idx = this.projects.findIndex(p => p.id === this.editingProject.id);
+                    if (idx >= 0) {
+                        this.projects[idx] = { ...this.editingProject };
+                    } else {
+                        this.projects.unshift({ ...this.editingProject });
+                    }
+                    this.editingProject = null;
+                    this.saveState();
+                },
+
+                deleteProject(id) {
+                    if (confirm('Delete this project permanently?')) {
+                        this.projects = this.projects.filter(p => p.id !== id);
+                        this.saveState();
+                    }
+                },
+
+                submitContactForm() {
+                    this.formSubmitting = true;
+                    setTimeout(() => {
+                        this.formSubmitting = false;
+                        this.formSent = true;
+                        this.form = { name: '', email: '', service: 'Graphic Design', message: '' };
+                        setTimeout(() => this.formSent = false, 5000);
+                    }, 1000);
+                },
+
+                copySql() {
+                    navigator.clipboard.writeText(this.sqlSchemaSnippet);
+                    alert('PostgreSQL Schema copied to clipboard!');
+                }
+            }
+        }
+    </script>
+</body>
+</html>
